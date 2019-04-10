@@ -1,0 +1,23 @@
+{
+   "type": "mssql",
+   "host": "119.23.249.15",
+   "username": "sa",
+   "password": "Hb159357",
+   "database": "myBlog",
+   "synchronize": true,
+   "logging": false,
+   "entities": [
+      "src/entity/**/*.ts"
+   ],
+   "migrations": [
+      "src/migration/**/*.ts"
+   ],
+   "subscribers": [
+      "src/subscriber/**/*.ts"
+   ],
+   "cli": {
+      "entitiesDir": "src/entity",
+      "migrationsDir": "src/migration",
+      "subscribersDir": "src/subscriber"
+   }
+}
