@@ -1,7 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { CommentModel } from './CommentModel'
 
-@Entity()
+@Entity({
+  name:'Blog_User'
+})
 export class UserModel {
   @PrimaryGeneratedColumn()
   id: number
@@ -13,5 +15,5 @@ export class UserModel {
   pwd: string
 
   @OneToMany(type => CommentModel, comment => comment.user)
-  comments: CommentModel[]
+  comments?: CommentModel[]
 }

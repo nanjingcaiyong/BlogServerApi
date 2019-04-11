@@ -1,7 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { ArticleModel } from './ArticleModel'
 
-@Entity()
+@Entity({
+  name:'Blog_ArticleType'
+})
 export class ArticleTypeModel {
   @PrimaryGeneratedColumn()
   id: number
@@ -13,5 +15,5 @@ export class ArticleTypeModel {
   sId: number
   //一对多
   @OneToMany(type => ArticleModel, article => article.articalType)
-  articles: ArticleModel[]
+  articles?: ArticleModel[]
 }

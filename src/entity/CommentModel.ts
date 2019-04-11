@@ -1,7 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 import { UserModel } from './UserModel'
 import { ArticleModel } from './ArticleModel' 
-@Entity()
+@Entity({
+  name:'Blog_Comment'
+})
 export class CommentModel{
   @PrimaryGeneratedColumn()
   id: number

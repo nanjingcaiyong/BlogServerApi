@@ -1,5 +1,7 @@
 import { Entity,Column,PrimaryGeneratedColumn } from 'typeorm'
-@Entity()
+@Entity({
+  name:'Blog_Like'
+})
 export class LikeModel{
   @PrimaryGeneratedColumn()
   id:number
@@ -8,11 +10,11 @@ export class LikeModel{
   typeId:number
   //用户Id
   @Column()
-  userId
+  userId:number
   //点赞类型(1:作品点赞,2:评论点赞,3:……)
   @Column()
-  type
+  type:string
   //点赞状态(0:取消赞,1:有效赞)
   @Column()
-  status
+  status:number
 }

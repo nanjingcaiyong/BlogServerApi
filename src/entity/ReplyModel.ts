@@ -2,7 +2,9 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'ty
 import { CommentModel } from './CommentModel'
 import { UserModel } from './UserModel'
 
-@Entity()
+@Entity({
+  name:'Blog_Reply'
+})
 export class ReplyModel {
   @PrimaryGeneratedColumn()
   id: number
