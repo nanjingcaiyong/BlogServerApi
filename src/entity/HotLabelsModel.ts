@@ -1,7 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
-
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from "typeorm";
+import { ArticleModel } from './ArticleModel'
 @Entity({
-  name:'Blog_HotLabels'
+  name: 'Blog_HotLabels'
 })
 export class HotLabelsModel {
   @PrimaryGeneratedColumn()
@@ -11,4 +11,7 @@ export class HotLabelsModel {
     length: 50
   })
   Title: string;
+
+  @ManyToMany(type => ArticleModel, article => article.hotLabels)
+  articles:ArticleModel[]
 }
