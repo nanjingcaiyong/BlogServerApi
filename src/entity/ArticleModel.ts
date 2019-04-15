@@ -12,6 +12,9 @@ export class ArticleModel {
   //标题
   @Column()
   title: string
+  //作者
+  @Column()
+  Author:string
   //内容
   @Column()
   content: string

@@ -9,16 +9,18 @@ export class PersonalController {
   async all(ctx, next) {
     return await this.userRepository.find();
   }
-  async one(request, response, next) {
-    return await this.userRepository.findOne(request.params.id);
+  async one(ctx, next) {
+    return await this.userRepository.findOne(ctx.request.params.id);
   }
 
-  async save(request, response, next) {
-    return await this.userRepository.save(request.body);
+  async save(ctx, next) {
+    if(await this.userRepository.save(ctx.request.body)){
+      return {status:1};
+    }
   }
 
-  async remove(request, response, next) {
-    let userToRemove = await this.userRepository.findOne(request.params.id);
+  async remove(ctx, next) {
+    let userToRemove = await this.userRepository.findOne(ctx.request.params.id);
     await this.userRepository.remove(userToRemove);
   }
 }
