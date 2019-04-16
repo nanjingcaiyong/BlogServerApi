@@ -12,7 +12,7 @@ export class ArticleTypeModel {
   title: string
   //子类型名称
   @Column()
-  sId: number
+  FId: number
   //一对多
   @OneToMany(type => ArticleModel, article => article.articalType)
   articles?: ArticleModel[]

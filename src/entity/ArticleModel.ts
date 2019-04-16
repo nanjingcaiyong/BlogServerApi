@@ -14,14 +14,16 @@ export class ArticleModel {
   title: string
   //作者
   @Column()
-  Author:string
+  author:string
   //内容
   @Column()
   content: string
   //浏览量
   @Column()
   view: number
-
+  //状态(-1:删除,0:下架,1:上架)
+  @Column()
+  status:number
   //多对一,一篇文章对应一个类别,一个类别对应多篇文章
   @ManyToOne(type => ArticleTypeModel, articalType => articalType.articles)
   articalType?: ArticleTypeModel
