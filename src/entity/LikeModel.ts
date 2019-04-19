@@ -1,4 +1,4 @@
-import { Entity,Column,PrimaryGeneratedColumn } from 'typeorm'
+import { Entity,Column,PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 @Entity({
   name:'Blog_Like'
 })
@@ -7,7 +7,7 @@ export class LikeModel{
   id:number
   //对应作品或评论的id
   @Column()
-  typeId:number
+  toId:number
   //用户Id
   @Column()
   userId:number

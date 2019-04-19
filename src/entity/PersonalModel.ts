@@ -4,26 +4,26 @@ import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 })
 export class PersonalModel {
   @PrimaryGeneratedColumn()
-  Id: number;
+  id: number;
   //性别
   @Column()
-  Name: string;
+  name: string;
   //年龄
   @Column()
-  Age: number;
+  age: number;
   //性别
   @Column()
-  Gender: boolean;
+  gender: boolean;
   // 学历
   @Column()
-  Education: string;
+  education: string;
   //职业
   @Column()
-  Occupation: string;
+  occupation: string;
   //就职公司
   @Column()
-  Company: string;
+  company: string;
   //居住地
   @Column()
-  Centered: string;
+  centered: string;
 }

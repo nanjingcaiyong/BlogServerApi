@@ -15,5 +15,5 @@ export class UserModel {
   pwd: string
 
   @OneToMany(type => CommentModel, comment => comment.user)
-  comments?: CommentModel[]
+  comments: CommentModel[]
 }

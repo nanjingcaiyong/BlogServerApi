@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
 import { ArticleModel } from './ArticleModel'
 
 @Entity({
@@ -12,8 +12,8 @@ export class ArticleTypeModel {
   title: string
   //子类型名称
   @Column()
-  FId: number
+  fId: number
   //一对多
-  @OneToMany(type => ArticleModel, article => article.articalType)
-  articles?: ArticleModel[]
+  @ManyToMany(type => ArticleModel, article => article.articleTypes)
+  articles: ArticleModel[]
 }

@@ -5,12 +5,14 @@ import { ArticleModel } from './ArticleModel'
 })
 export class HotLabelsModel {
   @PrimaryGeneratedColumn()
-  Id: number;
+  id: number;
   //标题名称
   @Column({
     length: 50
   })
-  Title: string;
+  title: string;
+  @Column()
+  view:number
 
   @ManyToMany(type => ArticleModel, article => article.hotLabels)
   articles:ArticleModel[]
