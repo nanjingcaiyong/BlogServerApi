@@ -1,10 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { BaseModel } from './BaseModel';
 @Entity({
   name:'Blog_Personal'
 })
-export class PersonalModel {
-  @PrimaryGeneratedColumn()
-  id: number;
+export class PersonalModel extends BaseModel{
   //性别
   @Column()
   name: string;

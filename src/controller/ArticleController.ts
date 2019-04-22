@@ -11,7 +11,7 @@ export class ArticleController extends BaseController {
   private hotLabelsRepository = new HotLabelsRepository();
 
   async all(ctx, next) {
-    await this.articleRepository.get(ctx.request.body);
+    return await this.articleRepository.get(ctx.request.body);
   }
   async save(ctx, next) {
     const { title, author, isRecommend, view, labels, types,content } = ctx.request.body;
@@ -26,7 +26,9 @@ export class ArticleController extends BaseController {
     article.status = 0;
     article.title = title;
     article.view = view;
-    article.No = 1;
+    article.no = 1;
+    article.buildTime = new Date();
+    article.updateTime = new Date();
     if(this.articleRepository.add(article)){
       return this.JsonBackResult(ResultStatus.Success,{name:'sa'});
     }

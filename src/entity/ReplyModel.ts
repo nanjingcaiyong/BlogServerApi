@@ -6,14 +6,11 @@ import {
   JoinColumn
 } from "typeorm";
 import { CommentModel } from "./CommentModel";
-import { UserModel } from "./UserModel";
-
+import { BaseModel } from './BaseModel'
 @Entity({
   name: "Blog_Reply"
 })
-export class ReplyModel {
-  @PrimaryGeneratedColumn()
-  id: number;
+export class ReplyModel extends BaseModel{
 
   @Column()
   content: string;

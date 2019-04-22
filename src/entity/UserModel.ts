@@ -1,12 +1,10 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { CommentModel } from './CommentModel'
-
+import { BaseModel } from './BaseModel'
 @Entity({
   name:'Blog_User'
 })
-export class UserModel {
-  @PrimaryGeneratedColumn()
-  id: number
+export class UserModel extends BaseModel{
   @Column()
   nickName: string
   @Column()

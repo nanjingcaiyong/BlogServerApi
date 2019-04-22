@@ -3,13 +3,12 @@ import { ArticleTypeModel } from './ArticleTypeModel';
 import { HotLabelsModel } from './HotLabelsModel';
 import { CommentModel } from './CommentModel';
 import { LikeModel } from './LikeModel';
+import { BaseModel } from './BaseModel';
 
 @Entity({
   name:'Blog_Article'
 })
-export  class ArticleModel {
-  @PrimaryGeneratedColumn()
-  id: number
+export  class ArticleModel extends BaseModel {
   //标题
   @Column()
   title: string
@@ -30,7 +29,7 @@ export  class ArticleModel {
   isRecommend:boolean
 
   @Column()
-  No:number
+  no:number
 
   //多对一,一篇文章对应一个类别,一个类别对应多篇文章
   @ManyToMany(type => ArticleTypeModel, articalType => articalType.articles,{

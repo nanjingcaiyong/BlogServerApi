@@ -1,11 +1,10 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from "typeorm";
-import { ArticleModel } from './ArticleModel'
+import { ArticleModel } from './ArticleModel';
+import { BaseModel } from './BaseModel';
 @Entity({
   name: 'Blog_HotLabels'
 })
-export class HotLabelsModel {
-  @PrimaryGeneratedColumn()
-  id: number;
+export class HotLabelsModel extends BaseModel{
   //标题名称
   @Column({
     length: 50

@@ -2,15 +2,14 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColum
 import { UserModel } from './UserModel';
 import { ArticleModel } from './ArticleModel';
 import { ReplyModel } from './ReplyModel';
+import { BaseModel } from './BaseModel';
 @Entity({
   name:'Blog_Comment'
 })
-export class CommentModel{
-  @PrimaryGeneratedColumn()
-  id: number
+export class CommentModel extends BaseModel{
+
   @Column()
   content: string
-
 
   @ManyToOne(type => UserModel, user => user.comments)
   @JoinColumn()
