@@ -20,6 +20,12 @@ const ArticleRoutes = [
     route: "/article/add",
     controller: ArticleController,
     action: "save"
+  },
+  {
+    method: "get",
+    route: "/article/all",
+    controller: ArticleController,
+    action: "all"
   }
 ];
 

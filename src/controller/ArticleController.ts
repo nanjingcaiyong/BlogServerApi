@@ -1,15 +1,34 @@
-import { getRepository } from "typeorm";
-import { ArticleModel } from "./../entity/ArticleModel";
+import ArticleRepository from './../repository/ArticleRepository';
+import ArticleTypeRepository from './../repository/ArticleTypeRepository';
+import HotLabelsRepository from './../repository/HotLabelsRepository';
+import { ArticleModel } from './../entity/ArticleModel'
+import { BaseController } from './BaseController';
+import { ResultStatus } from './../utils/ResultStatus';
 
-export class ArticleController {
-  private articleRepository = getRepository(ArticleModel);
+export class ArticleController extends BaseController {
+  private articleRepository = new ArticleRepository();
+  private articleTypeRepository = new ArticleTypeRepository();
+  private hotLabelsRepository = new HotLabelsRepository();
 
   async all(ctx, next) {
-    return await this.articleRepository.find();
+    await this.articleRepository.get(ctx.request.body);
   }
-
-  async save(ctx,next){
-    console.log(ctx.request.body);
-    return await this.articleRepository.save(ctx.request.body);
+  async save(ctx, next) {
+    const { title, author, isRecommend, view, labels, types,content } = ctx.request.body;
+    const articleTypeList = await this.articleTypeRepository.get(types);
+    const hotLabelsList = await this.hotLabelsRepository.get(labels);
+    const article = new ArticleModel();
+    article.hotLabels = hotLabelsList;
+    article.articleTypes = articleTypeList;
+    article.author = author;
+    article.content = content;
+    article.isRecommend = isRecommend;
+    article.status = 0;
+    article.title = title;
+    article.view = view;
+    article.No = 1;
+    if(this.articleRepository.add(article)){
+      return this.JsonBackResult(ResultStatus.Success,{name:'sa'});
+    }
   }
 }

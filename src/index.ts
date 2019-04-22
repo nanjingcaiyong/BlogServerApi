@@ -4,9 +4,6 @@ const bodyParser = require("koa-bodyparser");
 const Koa = require("koa");
 const Router = require("koa-router");
 import Routes  from "./router";
-import { ArticleModel } from './entity/ArticleModel';
-import { HotLabelsModel } from "./entity/HotLabelsModel";
-import { getRepository } from 'typeorm'
 
 const app = new Koa();
 const router = new Router();
@@ -15,8 +12,8 @@ createConnection()
   .then(async connection => {
     Routes.forEach(route => {
       router[route.method](route.route, async (ctx, next) => {
-        console.log(ctx.request.body)
         const result = await new route.controller()[route.action](ctx, next);
+        console.log('result',result);
         ctx.type = "json";
         ctx.body = result;
       });

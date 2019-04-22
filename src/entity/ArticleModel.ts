@@ -7,7 +7,7 @@ import { LikeModel } from './LikeModel';
 @Entity({
   name:'Blog_Article'
 })
-export class ArticleModel {
+export  class ArticleModel {
   @PrimaryGeneratedColumn()
   id: number
   //标题
