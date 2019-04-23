@@ -13,7 +13,6 @@ createConnection()
     Routes.forEach(route => {
       router[route.method](route.route, async (ctx, next) => {
         const result = await new route.controller()[route.action](ctx, next);
-        console.log('result',result);
         ctx.type = "json";
         ctx.body = result;
       });

@@ -5,14 +5,15 @@ import { BaseModel } from './BaseModel';
   name: 'Blog_HotLabels'
 })
 export class HotLabelsModel extends BaseModel{
-  //标题名称
+  //名称
   @Column({
     length: 50
   })
   title: string;
+  //浏览量
   @Column()
   view:number
 
   @ManyToMany(type => ArticleModel, article => article.hotLabels)
-  articles:ArticleModel[]
+  articles:Promise<ArticleModel[]>
 }

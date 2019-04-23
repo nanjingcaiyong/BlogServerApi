@@ -1,53 +1,58 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, OneToMany,JoinTable } from "typeorm";
-import { ArticleTypeModel } from './ArticleTypeModel';
-import { HotLabelsModel } from './HotLabelsModel';
-import { CommentModel } from './CommentModel';
-import { LikeModel } from './LikeModel';
-import { BaseModel } from './BaseModel';
+import {
+  Entity,
+  Column,
+  ManyToMany,
+  OneToMany,
+  JoinTable
+} from "typeorm";
+import { ArticleTypeModel } from "./ArticleTypeModel";
+import { HotLabelsModel } from "./HotLabelsModel";
+import { CommentModel } from "./CommentModel";
+import { LikeModel } from "./LikeModel";
+import { BaseModel } from "./BaseModel";
 
 @Entity({
-  name:'Blog_Article'
+  name: "Article"
 })
-export  class ArticleModel extends BaseModel {
+export class ArticleModel extends BaseModel {
   //标题
   @Column()
-  title: string
+  title: string;
   //作者
   @Column()
-  author:string
+  author: string;
   //内容
   @Column()
-  content: string
+  content: string;
   //浏览量
   @Column()
-  view: number
-  //状态(-1:删除,0:下架,1:上架)
+  view: number;
+  //是否推荐(不推荐:false,推荐:true)
   @Column()
-  status:number
-
+  isRecommend: boolean;
+  //序号,用于置顶
   @Column()
-  isRecommend:boolean
-
-  @Column()
-  no:number
+  no: number;
 
   //多对一,一篇文章对应一个类别,一个类别对应多篇文章
-  @ManyToMany(type => ArticleTypeModel, articalType => articalType.articles,{
-    cascade: true,
+  @ManyToMany(type => ArticleTypeModel, articalType => articalType.articles, {
+    cascade: true
   })
   @JoinTable()
-  articleTypes: ArticleTypeModel[]
+  articleTypes: Promise<ArticleTypeModel[]>;
 
   //多对多,一篇文章对应多个标签,一个标签也对应多篇文章
-  @ManyToMany(type => HotLabelsModel, hotLabel => hotLabel.articles,{
-    cascade: true,
+  @ManyToMany(type => HotLabelsModel, hotLabel => hotLabel.articles, {
+    cascade: true
   })
   @JoinTable()
-  hotLabels: HotLabelsModel[]
+  hotLabels: Promise<HotLabelsModel[]>;
 
-  @OneToMany(type => CommentModel, comment => comment.article,{
-    cascade: true,
+  @OneToMany(type => CommentModel, comment => comment.article, {
+    cascade: true
   })
-  comments: CommentModel[]
-
+  comments: Promise<CommentModel[]>;
+  
+  @OneToMany(type => LikeModel, like => like.article)
+  likes: Promise<LikeModel[]>;
 }

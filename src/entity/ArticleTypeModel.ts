@@ -11,7 +11,7 @@ export class ArticleTypeModel extends BaseModel {
   //子类型名称
   @Column()
   fId: number
-  //一对多
+
   @ManyToMany(type => ArticleModel, article => article.articleTypes)
-  articles: ArticleModel[]
+  articles:Promise<ArticleModel[]>
 }

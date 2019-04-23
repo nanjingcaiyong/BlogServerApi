@@ -1,21 +1,30 @@
-import { Entity,Column,PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { BaseModel } from './BaseModel';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinColumn } from "typeorm";
+import { BaseModel } from "./BaseModel";
+import { ArticleModel } from "./ArticleModel";
+import { CommentModel } from './CommentModel';
+import { ReplyModel } from './ReplyModel';
+import { UserModel } from './UserModel'
 @Entity({
-  name:'Blog_Like'
+  name: "Blog_Like"
 })
-export class LikeModel extends BaseModel{
-  @PrimaryGeneratedColumn()
-  id:number
-  //对应作品或评论的id
+export class LikeModel extends BaseModel {
+  //点赞类型(1:作品点赞,2:评论点赞,3:回复点赞)
   @Column()
-  toId:number
-  //用户Id
-  @Column()
-  userId:number
-  //点赞类型(1:作品点赞,2:评论点赞,3:……)
-  @Column()
-  type:string
-  //点赞状态(0:取消赞,1:有效赞)
-  @Column()
-  status:number
+  type: string;
+
+  @ManyToOne(type=>UserModel,users=>users.likes)
+  @JoinColumn()
+  user:Promise<UserModel>
+
+  @ManyToOne(type => ArticleModel, article => article.likes)
+  @JoinColumn()
+  article:Promise<ArticleModel>
+
+  @ManyToOne(type => CommentModel, comment => comment.likes)
+  @JoinColumn()
+  comment:Promise<CommentModel>
+
+  @ManyToOne(type => ReplyModel, reply => reply.likes)
+  @JoinColumn()
+  reply:Promise<ReplyModel>
 }
