@@ -22,6 +22,12 @@ const ArticleRoutes = [
     action: "save"
   },
   {
+    method: "post",
+    route: "/article/delete",
+    controller: ArticleController,
+    action: "delete"
+  },
+  {
     method: "get",
     route: "/article/all",
     controller: ArticleController,

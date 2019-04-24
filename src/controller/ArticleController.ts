@@ -11,13 +11,13 @@ export class ArticleController extends BaseController {
   private hotLabelsRepository = new HotLabelsRepository();
 
   async all(ctx, next) {
-    let res: ArticleModel[] | any[] = await this.articleRepository.get(),
+    let res: ArticleModel[] | any[] = await this.articleRepository.getAll(),
       length = res.length || 0;
-    while(length--){
+    while (length--) {
       let articleTypes = await res[length].articleTypes;
       let hotLabels = await res[length].hotLabels;
-      res[length].articleTypes = articleTypes.map(t=>t.title);
-      res[length].hotLabels = hotLabels.map(t=>t.title);
+      res[length].articleTypes = articleTypes.map(t => t.title);
+      res[length].hotLabels = hotLabels.map(t => t.title);
     }
     return res;
   }
@@ -32,8 +32,8 @@ export class ArticleController extends BaseController {
       content,
       status
     } = ctx.request.body;
-    const articleTypeList = await this.articleTypeRepository.get(types);
-    const hotLabelsList = await this.hotLabelsRepository.get(labels);
+    const articleTypeList = await this.articleTypeRepository.getMutil(types);
+    const hotLabelsList = await this.hotLabelsRepository.getMutil(labels);
     const article = new ArticleModel();
     article.hotLabels = Promise.resolve(hotLabelsList);
     article.articleTypes = Promise.resolve(articleTypeList);
@@ -46,11 +46,21 @@ export class ArticleController extends BaseController {
     article.no = 1;
     article.buildTime = new Date();
     article.updateTime = new Date();
-    if (this.articleRepository.add(article)) {
-      return this.JsonBackResult(ResultStatus.Success, { name: "sa" });
+    if (await this.articleRepository.addOne(article)) {
+      return this.JsonBackResult(ResultStatus.Success);
     }
+    return this.JsonBackResult(ResultStatus.Fail);
+  }
+  async delete(ctx, next) {
+    const { id } = ctx.request.body;
+    console.log('id',id);
+    const article = await this.articleRepository.getOne(id);
+    console.log('articles', article)
+    if (await this.articleRepository.deleteOne(article)) {
+      return this.JsonBackResult(ResultStatus.Success);
+    }
+    return this.JsonBackResult(ResultStatus.Fail);
   }
 }
 
 
-[{"id":2,"buildTime":"2019-03-22T05:29:00.000Z","updateTime":"2019-03-22T05:29:00.000Z","status":1,"title":"个人博文","fId":0},{"id":4,"buildTime":"2019-03-22T05:29:00.000Z","updateTime":"2019-03-22T05:29:00.000Z","status":1,"title":"前端","fId":2},{"id":5,"buildTime":"2019-03-22T05:29:00.000Z","updateTime":"2019-03-22T05:29:00.000Z","status":1,"title":".NET","fId":2},{"id":7,"buildTime":"2019-03-22T05:29:00.000Z","updateTime":"2019-03-22T05:29:00.000Z","status":1,"title":"服务器","fId":2},{"id":8,"buildTime":"2019-03-22T05:29:00.000Z","updateTime":"2019-03-22T05:29:00.000Z","status":1,"title":"生活日记","fId":0},{"id":10,"buildTime":"2019-03-22T05:29:00.000Z","updateTime":"2019-03-22T05:29:00.000Z","status":1,"title":"饭后杂谈","fId":0}]

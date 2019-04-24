@@ -10,13 +10,28 @@ export default class BaseRepository<T> extends Repository<T>{
   }
   private repository = getRepository<T>(this.entity);
 
-  async get(ids = []): Promise<T[]> {
-    return await ids.length > 0
-      ? this.repository.findByIds(ids)
-      : this.repository.find();
+  async getOne(id:number|string): Promise<T> {
+    return await this.repository.findOne()
+  }
+  async getMutil(ids:number[]):Promise<T[]>{
+    return await this.repository.findByIds(ids);
   }
 
-  async  add(model: T): Promise<T> {
-    return await this.repository.save(model);
+  async getAll(){
+    console.log(await this.repository.findOne(2));
+    return await this.repository.find();
+  }
+  async addOne(entity: T): Promise<T> {
+    return await this.repository.save(entity);
+  }
+  async addMutil(entities: T[]): Promise<T[]> {
+    return await this.repository.save(entities);
+  }
+
+  async deleteMutil(entities: T[]): Promise<T[]> {
+    return await this.repository.remove(entities);
+  }
+  async deleteOne(entity: T) {
+    return await this.repository.remove(entity);
   }
 }
