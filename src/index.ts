@@ -22,7 +22,7 @@ createConnection()
     app.use(bodyParser())
     app.use(router.routes()).use(router.allowedMethods());
     app.listen(3000);
-    let repository = connection.getRepository(PersonalModel);
-    console.log(await repository.findOneOrFail());
+    // let repository = connection.getRepository(PersonalModel);
+    // console.log(await repository.findOneOrFail());
   })
   .catch(err => console.log(err));

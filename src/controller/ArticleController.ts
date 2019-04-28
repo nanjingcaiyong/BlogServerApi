@@ -5,6 +5,7 @@ import { ArticleModel } from "./../entity/ArticleModel";
 import { BaseController } from "./BaseController";
 import { ResultStatus } from "./../utils/ResultStatus";
 
+
 export class ArticleController extends BaseController {
   private articleRepository = new ArticleRepository();
   private articleTypeRepository = new ArticleTypeRepository();
@@ -21,28 +22,26 @@ export class ArticleController extends BaseController {
     }
     return res;
   }
+  
   async save(ctx, next) {
-    const {
-      title,
-      author,
-      isRecommend,
-      view,
-      labels,
-      types,
-      content,
-      status
-    } = ctx.request.body;
-    const articleTypeList = await this.articleTypeRepository.getMutil(types);
-    const hotLabelsList = await this.hotLabelsRepository.getMutil(labels);
+    const form = ctx.request.body;
+
+    // console.log('form',form);
+    // for(let item of Object.keys(form)){
+    //   if(!form[item])return this.JsonBackResult(ResultStatus.Fail);
+    // }
+
+    const articleTypeList = await this.articleTypeRepository.getMutil(form.types);
+    const hotLabelsList = await this.hotLabelsRepository.getMutil(form.labels);
     const article = new ArticleModel();
     article.hotLabels = Promise.resolve(hotLabelsList);
     article.articleTypes = Promise.resolve(articleTypeList);
-    article.author = author;
-    article.content = content;
-    article.isRecommend = isRecommend;
-    article.status = status;
-    article.title = title;
-    article.view = view;
+    article.author = form.author;
+    article.content = form.content;
+    article.isRecommend = form.isRecommend;
+    article.status = form.status;
+    article.title = form.title;
+    article.view = form.view;
     article.no = 1;
     article.buildTime = new Date();
     article.updateTime = new Date();

@@ -17,8 +17,7 @@ export default class BaseRepository<T> extends Repository<T>{
     return await this.repository.findByIds(ids);
   }
 
-  async getAll(){
-    console.log(await this.repository.findOne(2));
+  async getAll():Promise<T[]>{
     return await this.repository.find();
   }
   async addOne(entity: T): Promise<T> {

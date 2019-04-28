@@ -1,15 +1,9 @@
-let arr = [
-  {
-    name:'sa',
-    age:1
-  },{
-    name:'admin',
-    age:12
-  },{
-    name:'zhansgan',
-    age:56
+var ctx = {
+  request:{
+    body:{
+      title:'s', author:'s', isRecommend:'s', view:'s', labels:'s', types:'s', content:'s', status:'s',gender:'男'
+    }
   }
-]
-
-let [{name}] = arr;
-console.log(name);
+}
+const {body, body:{title, author, isRecommend, view, labels, types, content, status }} = ctx.request;
+console.log(body);
