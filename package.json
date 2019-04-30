@@ -10,8 +10,10 @@
    "dependencies": {
       "express": "^4.16.4",
       "koa": "^2.7.0",
+      "koa-body": "4.1.0",
       "koa-bodyparser": "^4.2.1",
       "koa-router": "^7.4.0",
+      "koa2-cors": "^2.0.6",
       "mssql": "^4.0.4",
       "reflect-metadata": "^0.1.10",
       "rxjs": "^6.4.0",

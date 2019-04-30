@@ -4,12 +4,18 @@ import HotLabelsRepository from "./../repository/HotLabelsRepository";
 import { ArticleModel } from "./../entity/ArticleModel";
 import { BaseController } from "./BaseController";
 import { ResultStatus } from "./../utils/ResultStatus";
+import FileRepository from "../repository/FileRepository";
+import { FileModel } from "../entity/FileModel";
+const path = require('path')
+const fs = require('fs')
+const mkdirp = require('mkdirp');
 
 
 export class ArticleController extends BaseController {
   private articleRepository = new ArticleRepository();
   private articleTypeRepository = new ArticleTypeRepository();
   private hotLabelsRepository = new HotLabelsRepository();
+  private fileRepostitory = new FileRepository();
 
   async all(ctx, next) {
     let res: ArticleModel[] | any[] = await this.articleRepository.getAll(),
@@ -22,15 +28,36 @@ export class ArticleController extends BaseController {
     }
     return res;
   }
-  
+  async UploadThumb(ctx, next){
+     // 获取上传文件
+     console.log(ctx.request.files)
+    const file = ctx.request.files.file;   
+    if(file){
+      const filename = file.name.split('.')[0];
+      const ext = file.name.split('.')[1];
+      const fileStream = fs.createReadStream(file.path);
+      const uploadPath =path.resolve("./src/fileSaves"); // 这是我测试的路径
+      //如果存放文件夹不存在则创建
+      fs.existsSync(uploadPath) ||  mkdirp.sync(uploadPath);
+      const upStream = fs.createWriteStream(`${uploadPath}/${filename}.${ext}`)
+
+        // 可读流通过管道写入可写流
+        await fileStream.pipe(upStream); 
+        console.log(this.fileRepostitory);
+        const fileModel = new FileModel();
+        fileModel.buildTime = new Date();
+        fileModel.updateTime = new Date();
+        fileModel.name = filename;
+        fileModel.status = 1;
+        await this.fileRepostitory.addOne(fileModel);
+        return this.JsonBackResult(ResultStatus.Success);
+    }
+    return this.JsonBackResult(ResultStatus.Fail);
+  }
+
   async save(ctx, next) {
     const form = ctx.request.body;
-
-    // console.log('form',form);
-    // for(let item of Object.keys(form)){
-    //   if(!form[item])return this.JsonBackResult(ResultStatus.Fail);
-    // }
-
+    console.log('form',form)
     const articleTypeList = await this.articleTypeRepository.getMutil(form.types);
     const hotLabelsList = await this.hotLabelsRepository.getMutil(form.labels);
     const article = new ArticleModel();
@@ -52,9 +79,7 @@ export class ArticleController extends BaseController {
   }
   async delete(ctx, next) {
     const { id } = ctx.request.body;
-    console.log('id',id);
     const article = await this.articleRepository.getOne(id);
-    console.log('articles', article)
     if (await this.articleRepository.deleteOne(article)) {
       return this.JsonBackResult(ResultStatus.Success);
     }

@@ -3,13 +3,15 @@ import {
   Column,
   ManyToMany,
   OneToMany,
-  JoinTable
+  JoinTable,
+  ManyToOne
 } from "typeorm";
 import { ArticleTypeModel } from "./ArticleTypeModel";
 import { HotLabelsModel } from "./HotLabelsModel";
 import { CommentModel } from "./CommentModel";
 import { LikeModel } from "./LikeModel";
 import { BaseModel } from "./BaseModel";
+import { FileModel } from './FileModel';
 
 @Entity({
   name: "Article"
@@ -55,4 +57,7 @@ export class ArticleModel extends BaseModel {
   
   @OneToMany(type => LikeModel, like => like.article)
   likes: Promise<LikeModel[]>;
+
+  @ManyToOne(type=>FileModel,file=>file.articles)
+  file:Promise<FileModel>
 }

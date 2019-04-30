@@ -32,6 +32,12 @@ const ArticleRoutes = [
     route: "/article/all",
     controller: ArticleController,
     action: "all"
+  },
+  {
+    method: "post",
+    route: "/article/upload",
+    controller: ArticleController,
+    action: "UploadThumb"
   }
 ];
 

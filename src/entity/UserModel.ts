@@ -1,8 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import {
+  Entity,
+  Column,
+  OneToMany,
+  ManyToOne,
+  JoinColumn
+} from "typeorm";
 import { CommentModel } from "./CommentModel";
 import { BaseModel } from "./BaseModel";
 import { LikeModel } from "./LikeModel";
 import { ReplyModel } from "./ReplyModel";
+import { FileModel } from "./FileModel";
 @Entity({
   name: "Blog_User"
 })
@@ -25,4 +32,9 @@ export class UserModel extends BaseModel {
 
   @OneToMany(type => ReplyModel, reply => reply.user)
   replys: Promise<ReplyModel[]>;
+
+  //用户头像
+  @ManyToOne(type => FileModel, file => file.users)
+  @JoinColumn()
+  head: Promise<FileModel>;
 }

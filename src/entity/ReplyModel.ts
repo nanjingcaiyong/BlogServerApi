@@ -27,5 +27,6 @@ export class ReplyModel extends BaseModel{
   likes:Promise<LikeModel[]>
 
   @ManyToOne(type=>UserModel,user=>user.replys)
+  @JoinColumn()
   user:Promise<UserModel>
 }
