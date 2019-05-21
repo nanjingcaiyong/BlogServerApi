@@ -49,20 +49,21 @@ export class ArticleController extends BaseController {
         fileModel.updateTime = new Date();
         fileModel.name = filename;
         fileModel.status = 1;
-        await this.fileRepostitory.addOne(fileModel);
-        return this.JsonBackResult(ResultStatus.Success);
+        const res = await this.fileRepostitory.addOne(fileModel);
+        return this.JsonBackResult(ResultStatus.Success,{id:res.id});
     }
     return this.JsonBackResult(ResultStatus.Fail);
   }
 
   async save(ctx, next) {
     const form = ctx.request.body;
-    console.log('form',form)
-    const articleTypeList = await this.articleTypeRepository.getMutil(form.types);
-    const hotLabelsList = await this.hotLabelsRepository.getMutil(form.labels);
+    const articleTypeList = await this.articleTypeRepository.getMutil(form.typeIds);
+    const hotLabelsList = await this.hotLabelsRepository.getMutil(form.labelIds);
+    const file = await this.fileRepostitory.getMutil([form.fileId]);
     const article = new ArticleModel();
     article.hotLabels = Promise.resolve(hotLabelsList);
     article.articleTypes = Promise.resolve(articleTypeList);
+    article.file = Promise.resolve(file[0]);
     article.author = form.author;
     article.content = form.content;
     article.isRecommend = form.isRecommend;

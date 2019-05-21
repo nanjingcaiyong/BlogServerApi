@@ -3,6 +3,11 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 export class BaseModel {
+  constructor(){
+    if(new.target === BaseModel){
+      throw new Error('基类只能用于继承，不能实例化')
+    }
+  }
   //主键
   @PrimaryGeneratedColumn()
   id: number;

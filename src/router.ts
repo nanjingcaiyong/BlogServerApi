@@ -49,6 +49,12 @@ const ArticleTypeRoutes = [
     action: "save"
   },
   {
+    method:'get',
+    route:"/articleType/getNewsByType",
+    controller:ArticleTypeController,
+    action:'getNewsByType'
+  },
+  {
     method: "get",
     route: "/articleType/all",
     controller: ArticleTypeController,
